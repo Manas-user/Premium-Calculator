@@ -240,16 +240,17 @@ The project uses a production-ready multi-stage `Dockerfile`:
 
 ### Build & Run Commands (Windows PowerShell):
 ```powershell
-# 1. Build Docker image
-docker build -t premium-calculator:latest .
+# 1. Build Docker image with version and latest tags
+docker build -t premium-calculator:1.0.0 -t premium-calculator:latest .
 
-# 2. Run container in detached mode
-docker run -d --name premium-calculator-app -p 8080:8080 premium-calculator:latest
+# 2. Run container in detached mode (mapping host port 8080 to container port 8080)
+docker run -d --name premium-calculator-app -p 8080:8080 premium-calculator:1.0.0
 
-# 3. Check container status & health
+# 3. Check container status & health check probe
 docker ps
+docker inspect --format='{{json .State.Health.Status}}' premium-calculator-app
 
-# 4. View application container logs
+# 4. View application container startup and request logs
 docker logs -f premium-calculator-app
 
 # 5. Stop and remove container
@@ -259,10 +260,39 @@ docker rm premium-calculator-app
 
 ### Running with Docker Compose:
 ```powershell
+# Start container in background
 docker compose up -d
+
+# Check running status and health probe
 docker compose ps
+
+# View live logs
+docker compose logs -f
+
+# Stop and remove containers
 docker compose down
 ```
+
+### Docker Specifications & Parameters:
+- **Image Name:** `premium-calculator`
+- **Tags:** `1.0.0`, `latest`
+- **Container Name:** `premium-calculator-app`
+- **Host Port:** `8080` (Container Port: `8080`)
+- **Host URL:** `http://localhost:8080`
+- **Health Check Endpoint:** `http://localhost:8080/actuator/health`
+- **Security Context:** Runs as non-root user `appuser` (UID: 1001, GID: 1001)
+
+### Docker Desktop Setup on Windows 10/11:
+1. Download **Docker Desktop for Windows** from [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/).
+2. Run the installer and ensure **Use WSL 2 instead of Hyper-V (recommended)** is checked.
+3. If WSL 2 is not yet installed on Windows, open PowerShell as Administrator and run:
+   ```powershell
+   wsl --install
+   ```
+4. Restart your PC when prompted, launch Docker Desktop, and wait for the whale icon in the taskbar to turn solid green (Engine running).
+
+### Container Limitations:
+- **Persistence:** As documented for v1.0.0, transactions are stored in-memory. Stopping and deleting the container resets recorded transactions. In v1.1.0, a volume mount and database container (PostgreSQL) will be added.
 
 ---
 

@@ -1,27 +1,45 @@
-# Git
-.git
+# Version Control
+.git/
 .gitignore
-.github
+.gitattributes
+.github/
 
-# Maven build outputs & caches
+# Build artifacts & local class outputs
 target/
 *.class
+*.jar
+*.war
 *.log
+logs/
+
+# Maven cache
 .mvn/wrapper/maven-wrapper.jar.cache
 
-# IDE specific
+# IDE and Editor Directories
 .idea/
+*.iws
 *.iml
+*.ipr
+out/
 .vscode/
 .settings/
 .project
 .classpath
 
-# OS specific
+# Windows / OS metadata
 Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
 .DS_Store
 
-# Ansible & documentation
+# Local helper scripts & environment files
+run.bat
+.env
+.env.*
+*.key
+*.pem
+
+# Non-container documentation & Ansible automation
 ansible/
 docs/
 *.md
