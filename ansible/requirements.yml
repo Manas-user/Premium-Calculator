@@ -1,0 +1,6 @@
+# Ansible Galaxy Requirements File
+collections:
+  - name: community.docker
+    version: ">=3.8.0"
+  - name: ansible.posix
+    version: ">=1.5.4"

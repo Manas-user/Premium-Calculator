@@ -1,0 +1,27 @@
+# Git
+.git
+.gitignore
+.github
+
+# Maven build outputs & caches
+target/
+*.class
+*.log
+.mvn/wrapper/maven-wrapper.jar.cache
+
+# IDE specific
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS specific
+Thumbs.db
+.DS_Store
+
+# Ansible & documentation
+ansible/
+docs/
+*.md

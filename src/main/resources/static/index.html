@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Calculator — Insurance Estimate & DevOps Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand-section">
+                <div class="brand-logo">PC</div>
+                <div class="brand-title">
+                    <h1>Premium Calculator</h1>
+                    <div class="brand-subtitle">Demonstration Insurance Premium System & DevOps Lifecycle Project</div>
+                </div>
+            </div>
+            <div class="header-meta">
+                <div class="student-badge">
+                    <strong>Developer:</strong> Manas Chand | <strong>Roll No.:</strong> 23102C0030
+                </div>
+                <div class="health-status" id="healthPill" title="Actuator /actuator/health status">
+                    <span class="health-dot" id="healthDot"></span>
+                    <span id="healthText">Connecting...</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Prominent Demonstration Disclaimer Banner -->
+    <aside class="disclaimer-banner">
+        <span>⚠️</span>
+        <strong>Academic Demonstration Project:</strong>
+        <span>All rates (Life 1.20%, Health 2.40%, Vehicle 3.10%, Travel 1.60%) are illustrative estimates for college evaluation, not real insurance underwriting quotes.</span>
+    </aside>
+
+    <!-- Main Container -->
+    <main class="main-content">
+
+        <!-- Left Column: Premium Calculator Form & Estimate Summary -->
+        <section class="card" aria-labelledby="calcFormHeading">
+            <div class="card-header">
+                <h2 class="card-title" id="calcFormHeading">
+                    <span>📊</span> Calculate Premium Estimate
+                </h2>
+                <span class="text-muted" style="font-size: 0.8rem;">Step 1: Estimate & Submit</span>
+            </div>
+            <div class="card-body">
+
+                <!-- Alert Message Box -->
+                <div id="formAlert" class="alert-box" role="alert"></div>
+
+                <form id="calculatorForm" novalidate>
+                    <!-- Customer Name -->
+                    <div class="form-group">
+                        <label for="customerName" class="form-label">Customer Name <span style="color: var(--danger)">*</span></label>
+                        <input type="text" id="customerName" class="form-control" placeholder="e.g. Rahul Sharma" required minlength="2" maxlength="60">
+                        <div class="form-hint">Enter the full legal name of the insured person (2–60 characters).</div>
+                    </div>
+
+                    <!-- Policy Type Selection -->
+                    <div class="form-group">
+                        <label class="form-label">Policy Type <span style="color: var(--danger)">*</span></label>
+                        <div class="policy-selector-grid">
+                            <div class="policy-card-option selected" data-policy="LIFE" tabindex="0" role="button" aria-pressed="true">
+                                <div class="policy-option-header">
+                                    <span class="policy-option-name">🌱 Life</span>
+                                    <span class="policy-option-rate">1.20%/yr</span>
+                                </div>
+                                <div class="policy-option-desc">Term & life protection</div>
+                            </div>
+                            <div class="policy-card-option" data-policy="HEALTH" tabindex="0" role="button" aria-pressed="false">
+                                <div class="policy-option-header">
+                                    <span class="policy-option-name">🏥 Health</span>
+                                    <span class="policy-option-rate">2.40%/yr</span>
+                                </div>
+                                <div class="policy-option-desc">Hospital & medical cover</div>
+                            </div>
+                            <div class="policy-card-option" data-policy="VEHICLE" tabindex="0" role="button" aria-pressed="false">
+                                <div class="policy-option-header">
+                                    <span class="policy-option-name">🚗 Vehicle</span>
+                                    <span class="policy-option-rate">3.10%/yr</span>
+                                </div>
+                                <div class="policy-option-desc">Motor comprehensive</div>
+                            </div>
+                            <div class="policy-card-option" data-policy="TRAVEL" tabindex="0" role="button" aria-pressed="false">
+                                <div class="policy-option-header">
+                                    <span class="policy-option-name">✈️ Travel</span>
+                                    <span class="policy-option-rate">1.60%/yr</span>
+                                </div>
+                                <div class="policy-option-desc">Voyage & baggage cover</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedPolicyType" value="LIFE">
+                    </div>
+
+                    <!-- Coverage Amount -->
+                    <div class="form-group">
+                        <label for="coverageAmount" class="form-label">Coverage Amount (₹) <span style="color: var(--danger)">*</span></label>
+                        <input type="number" id="coverageAmount" class="form-control" placeholder="100000" min="1000" max="10000000" step="1000" value="100000" required>
+                        <div class="amount-shortcuts">
+                            <button type="button" class="shortcut-btn" data-amt="50000">₹50K</button>
+                            <button type="button" class="shortcut-btn" data-amt="100000">₹1 Lakh</button>
+                            <button type="button" class="shortcut-btn" data-amt="500000">₹5 Lakh</button>
+                            <button type="button" class="shortcut-btn" data-amt="1000000">₹10 Lakh</button>
+                            <button type="button" class="shortcut-btn" data-amt="2500000">₹25 Lakh</button>
+                        </div>
+                        <div class="form-hint">Minimum ₹1,000 | Maximum ₹10,000,000 (₹1 Crore).</div>
+                    </div>
+
+                    <!-- Policy Term -->
+                    <div class="form-group">
+                        <label for="policyTermSlider" class="form-label">Policy Term (Years) <span style="color: var(--danger)">*</span></label>
+                        <div class="range-container">
+                            <input type="range" id="policyTermSlider" class="range-slider" min="1" max="50" value="5">
+                            <span class="range-val-badge" id="policyTermDisplay">5 yrs</span>
+                        </div>
+                        <div class="form-hint">Term duration: 1 to 50 years.</div>
+                    </div>
+
+                    <!-- Formula Info Card -->
+                    <div style="background: #f1f5f9; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); font-size: 0.78rem; color: #475569; margin-bottom: 1.25rem;">
+                        <strong>Transparent Formula:</strong><br>
+                        • Annual Premium = Coverage Amount × Policy Rate<br>
+                        • Total Premium = Annual Premium × Policy Term
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+                        <button type="submit" id="calculateSubmitBtn" class="btn btn-primary" style="flex: 2;">
+                            <span id="btnSpinner" class="spinner" style="display: none;"></span>
+                            <span id="btnText">Calculate & Submit Estimate</span>
+                        </button>
+                        <button type="button" id="resetFormBtn" class="btn btn-outline" style="flex: 1;">Reset</button>
+                    </div>
+                </form>
+
+                <!-- Calculation Summary Section -->
+                <div id="estimateSummaryPanel" class="estimate-summary-panel">
+                    <div class="estimate-summary-header">
+                        <div class="estimate-summary-title">Calculation Summary</div>
+                        <span id="summaryStatusBadge" class="badge badge-SUBMITTED">SUBMITTED</span>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Transaction ID</div>
+                            <div class="metric-value" id="summaryTxId" style="font-size: 0.95rem; font-family: monospace;">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Policy & Rate</div>
+                            <div class="metric-value" id="summaryRate" style="font-size: 1rem;">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Est. Annual Premium</div>
+                            <div class="metric-value" id="summaryAnnualPremium">₹0.00</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Est. Total Premium</div>
+                            <div class="metric-value total" id="summaryTotalPremium">₹0.00</div>
+                        </div>
+                    </div>
+
+                    <div class="estimate-actions">
+                        <button type="button" id="summaryDownloadReceiptBtn" class="btn btn-outline btn-sm">
+                            📄 Download Receipt
+                        </button>
+                        <button type="button" id="summaryApproveBtn" class="btn btn-success btn-sm">
+                            ✓ Approve
+                        </button>
+                        <button type="button" id="summaryRejectBtn" class="btn btn-danger btn-sm">
+                            ✕ Reject
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Right Column: Recent Transactions & Search -->
+        <section class="card" aria-labelledby="historyHeading">
+            <div class="card-header">
+                <h2 class="card-title" id="historyHeading">
+                    <span>📋</span> Transaction Records
+                </h2>
+                <button type="button" id="refreshBtn" class="btn btn-outline btn-sm" title="Refresh transactions from backend">
+                    🔄 Refresh
+                </button>
+            </div>
+            <div class="card-body">
+
+                <!-- Search & Filter Controls -->
+                <div class="history-controls">
+                    <input type="text" id="searchInput" class="form-control search-input" placeholder="Search by ID or Customer...">
+                    <select id="statusFilter" class="form-control" style="width: auto; min-width: 140px;">
+                        <option value="ALL">All Statuses</option>
+                        <option value="SUBMITTED">SUBMITTED</option>
+                        <option value="APPROVED">APPROVED</option>
+                        <option value="REJECTED">REJECTED</option>
+                    </select>
+                </div>
+
+                <!-- Alert inside Transaction Section -->
+                <div id="tableAlert" class="alert-box" role="alert"></div>
+
+                <!-- Transactions Table -->
+                <div class="table-responsive">
+                    <table class="transactions-table" id="transactionsTable">
+                        <thead>
+                            <tr>
+                                <th>TXN ID</th>
+                                <th>Customer</th>
+                                <th>Policy</th>
+                                <th>Total Est.</th>
+                                <th>Status</th>
+                                <th style="text-align: right;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTbody">
+                            <!-- Injected dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">📂</div>
+                    <p>No transactions found.</p>
+                    <p class="text-muted" style="font-size: 0.8rem;">Submit your first estimate using the form on the left.</p>
+                </div>
+
+                <!-- Note regarding in-memory storage -->
+                <p style="margin-top: 1.25rem; font-size: 0.74rem; color: #94a3b8; text-align: center;">
+                    ℹ️ Current persistence: In-Memory thread-safe repository. Transactions reset when the server restarts.
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Transaction Details Modal -->
+    <div id="transactionModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Transaction Details</h3>
+                <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-details-grid">
+                    <div class="detail-item">
+                        <div class="detail-item-label">Transaction ID</div>
+                        <div class="detail-item-val" id="modalTxId" style="font-family: monospace;">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-item-label">Status</div>
+                        <div class="detail-item-val" id="modalStatus">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-item-label">Customer Name</div>
+                        <div class="detail-item-val" id="modalCustomerName">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-item-label">Policy Type</div>
+                        <div class="detail-item-val" id="modalPolicyType">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-item-label">Coverage Amount</div>
+                        <div class="detail-item-val" id="modalCoverage">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-item-label">Policy Term</div>
+                        <div class="detail-item-val" id="modalTerm">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-item-label">Annual Rate</div>
+                        <div class="detail-item-val" id="modalRate">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-item-label">Annual Premium</div>
+                        <div class="detail-item-val" id="modalAnnual">-</div>
+                    </div>
+                    <div class="detail-item" style="grid-column: span 2; background: #eff6ff; border-color: #bfdbfe;">
+                        <div class="detail-item-label" style="color: var(--primary);">Estimated Total Premium</div>
+                        <div class="detail-item-val" id="modalTotal" style="color: var(--primary); font-size: 1.25rem;">-</div>
+                    </div>
+                    <div class="detail-item" style="grid-column: span 2;">
+                        <div class="detail-item-label">Created At</div>
+                        <div class="detail-item-val" id="modalCreatedAt" style="font-size: 0.85rem; font-weight: normal;">-</div>
+                    </div>
+                </div>
+
+                <div style="font-size: 0.72rem; color: #94a3b8; background: #f8fafc; padding: 0.5rem; border-radius: 4px; border-left: 3px solid #cbd5e1;">
+                    Demonstration estimate only, not a real insurance underwriting quote.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="modalDownloadReceiptBtn" class="btn btn-outline btn-sm">📄 Download Receipt</button>
+                <button type="button" id="modalApproveBtn" class="btn btn-success btn-sm">✓ Approve</button>
+                <button type="button" id="modalRejectBtn" class="btn btn-danger btn-sm">✕ Reject</button>
+                <button type="button" id="modalDoneBtn" class="btn btn-outline btn-sm">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>

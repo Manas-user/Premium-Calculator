@@ -1,0 +1,21 @@
+# ==============================================================================
+# Variables for Premium Calculator Deployment
+# ==============================================================================
+
+app_name: premium-calculator
+container_name: premium-calculator-app
+image_name: premium-calculator
+image_tag: latest
+
+# Application Port Mappings
+host_port: 8080
+container_port: 8080
+
+# Environment Configuration
+spring_profile: prod
+jvm_memory_opts: "-Xms256m -Xmx512m -XX:+UseG1GC"
+
+# Health Check Settings
+health_endpoint: "http://localhost:{{ host_port }}/actuator/health"
+health_retries: 10
+health_delay: 3

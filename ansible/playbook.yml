@@ -1,0 +1,67 @@
+---
+- name: Deploy and Manage Premium Calculator Docker Container
+  hosts: app_servers
+  gather_facts: true
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+    - name: Ensure Python Docker SDK is installed
+      ansible.builtin.package:
+        name:
+          - python3-docker
+        state: present
+      become: true
+      ignore_errors: true
+
+    - name: Verify Docker service is running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+      become: true
+      ignore_errors: true
+
+    - name: Pull or verify Docker image exists
+      community.docker.docker_image_info:
+        name: "{{ image_name }}:{{ image_tag }}"
+      register: docker_img_info
+
+    - name: Stop and remove existing container if running
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
+        force_kill: true
+
+    - name: Launch Premium Calculator container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ image_name }}:{{ image_tag }}"
+        state: started
+        restart_policy: unless-stopped
+        ports:
+          - "{{ host_port }}:{{ container_port }}"
+        env:
+          SPRING_PROFILES_ACTIVE: "{{ spring_profile }}"
+          JAVA_OPTS: "{{ jvm_memory_opts }}"
+        healthcheck:
+          test: ["CMD-SHELL", "curl -f http://localhost:{{ container_port }}/actuator/health || exit 1"]
+          interval: 30s
+          timeout: 5s
+          retries: 3
+          start_period: 25s
+
+    - name: Wait for Actuator Health endpoint to return UP status
+      ansible.builtin.uri:
+        url: "{{ health_endpoint }}"
+        method: GET
+        status_code: 200
+        return_content: true
+      register: health_check
+      until: "health_check.status == 200 and 'UP' in health_check.content"
+      retries: "{{ health_retries }}"
+      delay: "{{ health_delay }}"
+
+    - name: Output deployment confirmation
+      ansible.builtin.debug:
+        msg: "Successfully deployed {{ app_name }} at http://localhost:{{ host_port }} with status: {{ health_check.json.status }}"
