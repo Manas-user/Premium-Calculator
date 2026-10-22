@@ -1,12 +1,15 @@
 pipeline {
     agent any
 
+    parameters {
+        booleanParam(name: 'RUN_DOCKER', defaultValue: true, description: 'Enable Docker image build, deployment, and health verification (requires Docker engine on agent)')
+    }
+
     environment {
         APP_NAME = 'premium-calculator'
         IMAGE_NAME = 'premium-calculator'
         DOCKER_REGISTRY = 'docker.io'
-        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
-        DOCKER_IMAGE_TAG = "${env.BUILD_NUMBER ?: 'latest'}"
+        DOCKER_IMAGE_TAG = "${env.BUILD_NUMBER ?: '1.0.0'}"
         DEPLOY_PORT = '8080'
     }
 
@@ -20,18 +23,22 @@ pipeline {
 
         stage('1. Checkout') {
             steps {
-                echo "--> Stage 1: Checking out source code from Git repository..."
+                echo "=========================================================="
+                echo "--> Stage 1: Checking out source code from Git repository"
+                echo "=========================================================="
                 checkout scm
                 script {
                     echo "Checked out commit: ${env.GIT_COMMIT ?: 'Local Workspace'}"
-                    echo "Branch: ${env.BRANCH_NAME ?: env.GIT_BRANCH ?: 'develop'}"
+                    echo "Branch: ${env.BRANCH_NAME ?: env.GIT_BRANCH ?: 'main'}"
                 }
             }
         }
 
         stage('2. Verify Java & Maven') {
             steps {
-                echo "--> Stage 2: Verifying runtime toolchains (Java & Maven Wrapper)..."
+                echo "=========================================================="
+                echo "--> Stage 2: Verifying Java 17 and Maven toolchains"
+                echo "=========================================================="
                 script {
                     if (isUnix()) {
                         sh 'java -version'
@@ -46,7 +53,9 @@ pipeline {
 
         stage('3. Run Tests') {
             steps {
-                echo "--> Stage 3: Running Unit and Integration Tests..."
+                echo "=========================================================="
+                echo "--> Stage 3: Running Unit and Integration Tests (Surefire)"
+                echo "=========================================================="
                 script {
                     if (isUnix()) {
                         sh './mvnw clean test'
@@ -60,14 +69,16 @@ pipeline {
                     junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
                 }
                 failure {
-                    echo "ERROR: Unit or Integration tests failed. Halting pipeline execution."
+                    echo "ERROR: Automated tests failed. Halting pipeline execution."
                 }
             }
         }
 
         stage('4. Package Application') {
             steps {
-                echo "--> Stage 4: Packaging Spring Boot JAR (skipping test repetition)..."
+                echo "=========================================================="
+                echo "--> Stage 4: Packaging Spring Boot Executable Fat JAR"
+                echo "=========================================================="
                 script {
                     if (isUnix()) {
                         sh './mvnw package -DskipTests'
@@ -80,14 +91,21 @@ pipeline {
 
         stage('5. Archive Artifact') {
             steps {
-                echo "--> Stage 5: Archiving packaged Spring Boot executable JAR..."
+                echo "=========================================================="
+                echo "--> Stage 5: Archiving packaged Spring Boot JAR artifact"
+                echo "=========================================================="
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
 
         stage('6. Build Docker Image') {
+            when {
+                expression { return params.RUN_DOCKER }
+            }
             steps {
-                echo "--> Stage 6: Building Docker container image (${IMAGE_NAME}:${DOCKER_IMAGE_TAG})..."
+                echo "=========================================================="
+                echo "--> Stage 6: Building Docker container image (${IMAGE_NAME}:${DOCKER_IMAGE_TAG})"
+                echo "=========================================================="
                 script {
                     if (isUnix()) {
                         sh "docker build -t ${IMAGE_NAME}:${DOCKER_IMAGE_TAG} -t ${IMAGE_NAME}:latest ."
@@ -100,13 +118,18 @@ pipeline {
 
         stage('7. Deploy Container') {
             when {
-                anyOf {
-                    branch 'main'
-                    branch 'develop'
+                allOf {
+                    expression { return params.RUN_DOCKER }
+                    anyOf {
+                        branch 'main'
+                        branch 'develop'
+                    }
                 }
             }
             steps {
-                echo "--> Stage 7: Deploying container on target environment..."
+                echo "=========================================================="
+                echo "--> Stage 7: Deploying container on target environment"
+                echo "=========================================================="
                 script {
                     if (isUnix()) {
                         sh """
@@ -127,13 +150,18 @@ pipeline {
 
         stage('8. Verify Health') {
             when {
-                anyOf {
-                    branch 'main'
-                    branch 'develop'
+                allOf {
+                    expression { return params.RUN_DOCKER }
+                    anyOf {
+                        branch 'main'
+                        branch 'develop'
+                    }
                 }
             }
             steps {
-                echo "--> Stage 8: Verifying application health via Actuator endpoint..."
+                echo "=========================================================="
+                echo "--> Stage 8: Verifying Actuator Health (/actuator/health)"
+                echo "=========================================================="
                 sleep time: 10, unit: 'SECONDS'
                 script {
                     if (isUnix()) {
@@ -149,10 +177,14 @@ pipeline {
 
     post {
         success {
+            echo "=========================================================="
             echo "SUCCESS: Premium Calculator CI/CD pipeline finished successfully!"
+            echo "=========================================================="
         }
         failure {
+            echo "=========================================================="
             echo "FAILURE: Premium Calculator pipeline encountered an error. Check logs above."
+            echo "=========================================================="
         }
     }
 }

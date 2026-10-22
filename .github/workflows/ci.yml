@@ -1,0 +1,55 @@
+name: Premium Calculator CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    name: Build, Test & Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Grant Execute Permission to Maven Wrapper
+        run: chmod +x mvnw
+
+      - name: Verify Toolchains
+        run: |
+          java -version
+          ./mvnw -v
+
+      - name: Run Unit & Integration Tests (33 tests)
+        run: ./mvnw clean test
+
+      - name: Publish Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: surefire-test-reports
+          path: target/surefire-reports/
+
+      - name: Package Spring Boot Executable Fat JAR
+        run: ./mvnw package -DskipTests
+
+      - name: Archive Built JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-calculator-jar
+          path: target/*.jar
+
+      - name: Build Docker Container Image
+        run: |
+          docker build -t premium-calculator:latest -t premium-calculator:${{ github.sha }} .
+          docker images
