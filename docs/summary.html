@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Premium Calculator - Full Project Summary & Faculty Viva Guide</title>
+<style>
+    @page {
+        size: A4;
+        margin: 18mm 16mm 18mm 16mm;
+    }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #1e293b;
+        background: #ffffff;
+        font-size: 10.5pt;
+        line-height: 1.55;
+    }
+    .cover {
+        text-align: center;
+        padding: 35px 20px 25px 20px;
+        border-bottom: 2.5px solid #2563eb;
+        margin-bottom: 25px;
+    }
+    .badge {
+        display: inline-block;
+        background: #eff6ff;
+        color: #1d4ed8;
+        font-weight: 700;
+        font-size: 8.5pt;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        border: 1px solid #bfdbfe;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 12px;
+    }
+    h1 {
+        font-size: 24pt;
+        color: #0f172a;
+        margin-bottom: 6px;
+        font-weight: 800;
+    }
+    .subtitle {
+        font-size: 11.5pt;
+        color: #475569;
+        margin-bottom: 16px;
+    }
+    .student-card {
+        display: inline-block;
+        background: #f8fafc;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 10px 24px;
+        margin-top: 5px;
+        text-align: left;
+        font-size: 10pt;
+    }
+    .student-card table td {
+        padding: 2px 8px;
+    }
+    .student-card strong {
+        color: #0f172a;
+    }
+    h2 {
+        font-size: 14pt;
+        color: #1e3a8a;
+        border-bottom: 1.5px solid #e2e8f0;
+        padding-bottom: 4px;
+        margin-top: 22px;
+        margin-bottom: 10px;
+        page-break-after: avoid;
+    }
+    h3 {
+        font-size: 11.5pt;
+        color: #0f172a;
+        margin-top: 14px;
+        margin-bottom: 6px;
+        page-break-after: avoid;
+    }
+    p {
+        margin-bottom: 8px;
+        text-align: justify;
+    }
+    ul, ol {
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+    li {
+        margin-bottom: 4px;
+    }
+    .callout {
+        background: #f8fafc;
+        border-left: 4px solid #2563eb;
+        padding: 10px 14px;
+        border-radius: 0 6px 6px 0;
+        margin: 12px 0;
+        font-size: 10pt;
+    }
+    .callout-success {
+        background: #f0fdf4;
+        border-left-color: #16a34a;
+    }
+    .callout-viva {
+        background: #fefce8;
+        border-left-color: #ca8a04;
+    }
+    table.data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+        font-size: 9.5pt;
+    }
+    table.data-table th, table.data-table td {
+        border: 1px solid #cbd5e1;
+        padding: 6px 10px;
+        text-align: left;
+    }
+    table.data-table th {
+        background: #f1f5f9;
+        color: #0f172a;
+        font-weight: 700;
+    }
+    .code-block {
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-family: Consolas, monospace;
+        font-size: 9pt;
+        margin: 8px 0;
+        white-space: pre-wrap;
+    }
+    .page-break {
+        page-break-before: always;
+    }
+    .grid-2 {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 10px;
+    }
+    .card {
+        flex: 1;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 10px 12px;
+        background: #fafafa;
+    }
+    .footer-note {
+        text-align: center;
+        font-size: 8.5pt;
+        color: #94a3b8;
+        margin-top: 25px;
+        padding-top: 8px;
+        border-top: 1px solid #e2e8f0;
+    }
+</style>
+</head>
+<body>
+
+<!-- COVER SECTION -->
+<div class="cover">
+    <div class="badge">College DevOps Practical Examination</div>
+    <h1>Premium Calculator</h1>
+    <div class="subtitle">Complete Project Summary, Technical Overview & Faculty Presentation Guide</div>
+
+    <div class="student-card">
+        <table>
+            <tr><td><strong>Student Name:</strong></td><td>Manas Chand</td></tr>
+            <tr><td><strong>Roll Number:</strong></td><td>23102C0030</td></tr>
+            <tr><td><strong>Repository:</strong></td><td>github.com/Manas-user/Premium-Calculator</td></tr>
+            <tr><td><strong>Stack:</strong></td><td>Java 17, Spring Boot, Maven, HTML/CSS/JS, Docker, Jenkins, Ansible</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- 1. EXECUTIVE SUMMARY -->
+<h2>1. What is this Project? (In Simple Words)</h2>
+<p>
+    <strong>Premium Calculator</strong> is a full-stack web application designed to calculate, manage, and track estimated insurance premiums. 
+    More importantly, it is built to demonstrate the <strong>complete modern Software Development Lifecycle (SDLC) and DevOps pipeline</strong> required in enterprise software engineering:
+</p>
+<ul>
+    <li><strong>For the Customer/User:</strong> A fast, responsive web portal where you enter a customer's name, choose a policy category (Life, Health, Vehicle, Travel), enter a coverage sum and duration, calculate estimated annual and total premiums, and download a text receipt voucher.</li>
+    <li><strong>For Claims Officers:</strong> A management dashboard to review submitted transactions, approve or reject them, and maintain an audit history.</li>
+    <li><strong>For the DevOps Engineer / College Evaluation:</strong> A complete CI/CD automation suite featuring version control (GitFlow), containerization (Docker), continuous integration (Jenkins and GitHub Actions), configuration management (Ansible), and operational health monitoring (Spring Boot Actuator).</li>
+</ul>
+
+<div class="callout callout-success">
+    <strong>Key Academic Disclaimer:</strong> All calculation formulas and rates are demonstration estimates designed for educational grading and do not represent real-world commercial insurance underwriting quotes.
+</div>
+
+<!-- 2. WHAT IT DOES & HOW IT DOES IT -->
+<h2>2. What the Application Does (Core Features)</h2>
+<div class="grid-2">
+    <div class="card">
+        <h3>1. Calculate Estimates</h3>
+        <p>Calculates transparent annual and total premiums for 4 policy categories with strict mathematical precision using Java <code>BigDecimal</code>.</p>
+    </div>
+    <div class="card">
+        <h3>2. Transaction Lifecycle</h3>
+        <p>Every calculation is saved with a unique ID (e.g. <code>TXN-A1B2C3D4</code>) in <strong>SUBMITTED</strong> state, and can be reviewed, approved, or rejected.</p>
+    </div>
+</div>
+<div class="grid-2">
+    <div class="card">
+        <h3>3. Instant Receipt Download</h3>
+        <p>Generates an official formatted plain-text receipt voucher (<code>receipt-TXN-XXXXXXXX.txt</code>) ready for download.</p>
+    </div>
+    <div class="card">
+        <h3>4. System Health Heartbeat</h3>
+        <p>Frontend continuously pings the backend Actuator endpoint (<code>/actuator/health</code>) to display a live green status badge (<code>Backend: UP</code>).</p>
+    </div>
+</div>
+
+<!-- 3. THE FORMULA & RATES -->
+<h2>3. The Calculation Formula & Policy Rates</h2>
+<p>The backend implements a transparent, high-precision mathematical engine:</p>
+<div class="code-block">
+Annual Premium = Coverage Amount × Policy Rate
+Estimated Total Premium = Annual Premium × Policy Term (in Years)
+</div>
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Policy Category</th>
+            <th>Illustrative Rate</th>
+            <th>Min / Max Coverage</th>
+            <th>Example (₹1,00,000 for 5 Years)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>🌱 Life Insurance</strong></td>
+            <td>1.20% (0.0120)</td>
+            <td>₹1,000 to ₹10,000,000</td>
+            <td>Annual: ₹1,200 | Total: ₹6,000</td>
+        </tr>
+        <tr>
+            <td><strong>🏥 Health Insurance</strong></td>
+            <td>2.40% (0.0240)</td>
+            <td>₹1,000 to ₹10,000,000</td>
+            <td>Annual: ₹2,400 | Total: ₹12,000</td>
+        </tr>
+        <tr>
+            <td><strong>🚗 Vehicle Insurance</strong></td>
+            <td>3.10% (0.0310)</td>
+            <td>₹1,000 to ₹10,000,000</td>
+            <td>Annual: ₹3,100 | Total: ₹15,500</td>
+        </tr>
+        <tr>
+            <td><strong>✈️ Travel Insurance</strong></td>
+            <td>1.60% (0.0160)</td>
+            <td>₹1,000 to ₹10,000,000</td>
+            <td>Annual: ₹1,600 | Total: ₹8,000</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<!-- 4. TECHNOLOGIES USED -->
+<h2>4. Technologies Used & Why We Used Them</h2>
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Technology</th>
+            <th>Role</th>
+            <th>Why We Chose It</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Java 17 LTS</strong></td>
+            <td>Core Backend</td>
+            <td>Modern Long Term Support Java release with enhanced security, records, and performance.</td>
+        </tr>
+        <tr>
+            <td><strong>Spring Boot 3.2.5</strong></td>
+            <td>Web Framework</td>
+            <td>Enterprise standard for building production REST APIs, dependency injection, and embedded Tomcat.</td>
+        </tr>
+        <tr>
+            <td><strong>Spring Boot Actuator</strong></td>
+            <td>Monitoring</td>
+            <td>Provides production-ready health checks (<code>/actuator/health</code>) consumed by Docker, Jenkins, and Ansible.</td>
+        </tr>
+        <tr>
+            <td><strong>HTML5, CSS3, Vanilla JS</strong></td>
+            <td>Frontend UI</td>
+            <td>Zero framework bloat. Fast load times, responsive mobile-first design, direct REST API consumption.</td>
+        </tr>
+        <tr>
+            <td><strong>JUnit 5 & Mockito</strong></td>
+            <td>Automated Testing</td>
+            <td>33 comprehensive unit and integration tests verifying all calculations, API contracts, and edge cases.</td>
+        </tr>
+        <tr>
+            <td><strong>Docker</strong></td>
+            <td>Containerization</td>
+            <td>Multi-stage build (Temurin 17 JRE) with non-root security context (<code>appuser</code>) and health probes.</td>
+        </tr>
+        <tr>
+            <td><strong>Jenkins CI/CD</strong></td>
+            <td>Pipeline Automation</td>
+            <td>8-stage declarative pipeline (Checkout, Verify, Test, Package, Archive, Docker, Deploy, Health Check).</td>
+        </tr>
+        <tr>
+            <td><strong>GitHub Actions</strong></td>
+            <td>Cloud CI Runner</td>
+            <td>Runs automated tests and packages the JAR in the cloud on every push to <code>main</code> or <code>develop</code>.</td>
+        </tr>
+        <tr>
+            <td><strong>Ansible</strong></td>
+            <td>Configuration Mgmt</td>
+            <td>Agentless infrastructure automation playbook for idempotent deployment and health verification.</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- 5. HOW WE BUILT IT -->
+<h2>5. How We Built It (Step-by-Step Lifecycle)</h2>
+<ol>
+    <li><strong>Step 1: Domain Modeling & Formula Engine:</strong> Created Java enums (<code>PolicyType</code>, <code>TransactionStatus</code>), domain entities, and <code>PremiumCalculationService</code> using <code>BigDecimal</code> with <code>RoundingMode.HALF_UP</code> to prevent rounding errors.</li>
+    <li><strong>Step 2: REST API & Validation:</strong> Implemented <code>PremiumCalculatorController</code> with Jakarta Bean Validation (<code>@Valid</code>, <code>@NotBlank</code>, <code>@DecimalMin</code>) and centralized advice (<code>GlobalExceptionHandler</code>) to return clean JSON error envelopes.</li>
+    <li><strong>Step 3: Persistence Abstraction:</strong> Created a decoupled <code>TransactionRepository</code> interface with an in-memory thread-safe implementation (<code>ConcurrentHashMap</code>) ready for future database migration.</li>
+    <li><strong>Step 4: Responsive Frontend:</strong> Built modern UI with live calculation summaries, synchronized term slider, quick amount buttons, receipt download, and transaction search/filter table.</li>
+    <li><strong>Step 5: Automated QA Suite:</strong> Wrote 33 unit and integration tests. Executed test suite — <strong>33 passed, 0 failed, 100% success rate</strong>.</li>
+    <li><strong>Step 6: Version Control:</strong> Initialized Git repository, followed GitFlow with <code>main</code> and <code>develop</code> branches, and pushed to GitHub: <code>https://github.com/Manas-user/Premium-Calculator</code>.</li>
+    <li><strong>Step 7: Multi-Stage Dockerfile:</strong> Authored hardened two-stage Dockerfile that builds with JDK and runs on lightweight JRE as non-root user.</li>
+    <li><strong>Step 8: CI/CD & Configuration Management:</strong> Authored 8-stage <code>Jenkinsfile</code>, GitHub Actions workflow (<code>.github/workflows/ci.yml</code>), and Ansible playbooks in <code>ansible/</code>.</li>
+</ol>
+
+<div class="page-break"></div>
+
+<!-- 6. HOW TO EXPLAIN TO FACULTY -->
+<h2>6. Faculty Viva Voce & Presentation Guide</h2>
+<p>
+    When presenting this project to your professor or external examiner, follow this structured 2-minute elevator pitch and be prepared for these typical questions:
+</p>
+
+<div class="callout callout-viva">
+    <strong>Your 2-Minute Explanation Pitch to Faculty:</strong><br>
+    <em>
+    "Good morning Sir/Madam. My project is 'Premium Calculator', developed by Manas Chand (Roll No. 23102C0030). 
+    It is a full-stack insurance estimation system designed to showcase the complete modern DevOps lifecycle. 
+    The backend is engineered with Java 17 and Spring Boot 3, providing high-precision financial calculation endpoints and a transaction state machine. 
+    The frontend is an interactive single-page application communicating via REST APIs. 
+    On the DevOps front, the application is covered by 33 automated unit and integration tests, containerized using a multi-stage Dockerfile running as a non-root user, automated through an 8-stage Jenkins pipeline and GitHub Actions, and orchestrated using Ansible with automated Actuator health verification."
+    </em>
+</div>
+
+<h3>Expected Faculty Questions & Model Answers:</h3>
+
+<p><strong>Q1: Why did you use BigDecimal instead of double or float for calculations?</strong></p>
+<p><strong>Answer:</strong> <em>"In financial applications, <code>float</code> and <code>double</code> use binary floating-point representation, which causes imprecise decimal rounding (e.g., 0.1 + 0.2 != 0.3). <code>BigDecimal</code> guarantees exact arbitrary-precision arithmetic. We also enforce <code>RoundingMode.HALF_UP</code> scaled to 2 decimal places to meet currency standards."</em></p>
+
+<p><strong>Q2: Why is a multi-stage Dockerfile better than a single-stage one?</strong></p>
+<p><strong>Answer:</strong> <em>"A single-stage Dockerfile retains the entire JDK, Maven compiler, and source code in the final image, making it 800MB+ and vulnerable. In our multi-stage build, Stage 1 builds the JAR with JDK 17, but Stage 2 copies only the compiled JAR into a lightweight, hardened JRE 17 runtime, reducing image size to ~200MB and eliminating build tool attack surfaces."</em></p>
+
+<p><strong>Q3: Why run the container as a non-root user?</strong></p>
+<p><strong>Answer:</strong> <em>"By default, containers execute as <code>root</code>. If an attacker exploits an application vulnerability, they could potentially escape container boundaries with root privileges. In our Dockerfile, we explicitly create and switch to <code>appuser:appgroup</code> (UID 1001), adhering to the Principle of Least Privilege."</em></p>
+
+<p><strong>Q4: What is the purpose of Spring Boot Actuator in your project?</strong></p>
+<p><strong>Answer:</strong> <em>"Actuator exposes production-grade observability endpoints. We exposed <code>/actuator/health</code>, which returns a structured JSON heartbeat (<code>{"status":"UP"}</code>). This is actively polled by our frontend UI, Docker's <code>HEALTHCHECK</code> directive, the Jenkins deployment stage, and our Ansible playbook to guarantee zero-downtime health verification."</em></p>
+
+<p><strong>Q5: What branching strategy did you follow in Git?</strong></p>
+<p><strong>Answer:</strong> <em>"We adopted the GitFlow model using two primary branches: <code>main</code> (for production releases) and <code>develop</code> (for continuous integration and testing). We also followed the Conventional Commits convention (e.g. <code>feat:</code>, <code>chore:</code>, <code>ci:</code>)."</em></p>
+
+<!-- 7. SUMMARY & CONCLUSION -->
+<h2>7. Summary of Results</h2>
+<ul>
+    <li><strong>All 33 Tests Passing:</strong> Surefire reports 33 tests executed with 0 failures, 0 errors, and 0 skipped.</li>
+    <li><strong>Application Running:</strong> Hosted at <code>http://localhost:8080</code> with active health check.</li>
+    <li><strong>GitHub Repository:</strong> Synchronized at <code>https://github.com/Manas-user/Premium-Calculator</code> with complete source history.</li>
+    <li><strong>Cloud CI/CD:</strong> GitHub Actions workflow actively compiling and verifying builds in the cloud.</li>
+</ul>
+
+<div class="footer-note">
+    Premium Calculator — College Practical DevOps Project &copy; 2026 Manas Chand (Roll No. 23102C0030)
+</div>
+
+</body>
+</html>
